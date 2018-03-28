@@ -1,18 +1,20 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Tasks', {
+    return queryInterface.createTable('Reminders', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
+      next: {
+        allowNull: false,
+        type: Sequelize.DATE
       },
-      details: {
-        type: Sequelize.STRING
+      repeat: {
+        allowNull: false,
+        type: Sequelize.BIGINT
       },
       createdAt: {
         allowNull: false,
@@ -30,10 +32,19 @@ module.exports = {
           model: 'Users',
           key: 'id'
         }
+      },
+      TaskId: {
+        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        allowNull: false,
+        references: {
+          model: 'Tasks',
+          key: 'id'
+        }
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Tasks');
+    return queryInterface.dropTable('Reminders');
   }
 };

@@ -4,7 +4,8 @@ var router  = express.Router();
 
 router.post('/create', function(req, res) {
   models.User.create({
-    username: req.body.username
+    username: req.body.username,
+    email: req.body.email || 'martisekpetr@gmail.com'
   }).then(function() {
     res.redirect('/');
   });
@@ -23,8 +24,18 @@ router.get('/:user_id/destroy', function(req, res) {
 router.post('/:user_id/tasks/create', function (req, res) {
   models.Task.create({
     title: req.body.title,
+    details: req.body.details,
     UserId: req.params.user_id
-  }).then(function() {
+  })
+  .then(function(task) {
+    models.Reminder.create({
+      next: req.body.date,
+      repeat: req.body.repeat,
+      UserId: req.params.user_id,
+      TaskId: task.id,
+    })
+  })
+  .then(function() {
     res.redirect('/');
   });
 });

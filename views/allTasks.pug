@@ -1,0 +1,11 @@
+html
+  h1= title
+
+  div
+    ul
+      each reminder in reminders
+        li
+          strong
+            = reminder.Task.title     
+          p
+            = reminder.Task.details

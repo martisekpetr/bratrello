@@ -1,7 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Task = sequelize.define('Task', {
-    title: DataTypes.STRING
+    title: DataTypes.STRING,
+    details: DataTypes.STRING,
   });
 
   Task.associate = function (models) {
@@ -11,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
+    models.Task.hasMany(models.Reminder);
   };
 
   return Task;
